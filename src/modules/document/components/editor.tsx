@@ -23,12 +23,14 @@ import { FontSize } from "./extensions/font-size";
 import { LineHeight } from "./extensions/line-height";
 
 import FileHandler from "@tiptap-pro/extension-file-handler";
+import { Ruler } from "./ruler";
 
 export const Editor = () => {
     const { setEditor } = useEditorStore((state) => state);
 
     const editor = useEditor({
         immediatelyRender: false,
+
         onCreate({ editor }) {
             setEditor(editor);
         },
@@ -64,7 +66,7 @@ export const Editor = () => {
         editorProps: {
             attributes: {
                 style: "padding-left: 56px; padding-right: 56px;",
-                class: "mt-10 flex min-h-[1054px] w-[816px] cursor-text flex-col border border-[#c7c7c7] bg-white py-10 pr-14 focus:outline-none print:border-0",
+                class: "flex min-h-[1054px] w-[816px] cursor-text flex-col border border-[#c7c7c7] bg-white py-10 pr-14 focus:outline-none print:border-0",
             },
         },
         extensions: [
@@ -175,6 +177,7 @@ export const Editor = () => {
 
     return (
         <div className="size-full overflow-x-auto bg-[#f9fbfd] px-4 print:overflow-visible print:bg-white print:p-0">
+            <Ruler />
             <div className="mx-auto flex w-[816px] min-w-max justify-center py-4 print:w-full print:min-w-0 print:py-0">
                 <EditorContent editor={editor} />
             </div>

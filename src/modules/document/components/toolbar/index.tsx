@@ -18,7 +18,7 @@ export const Toolbar = () => {
     const sections = useSections();
 
     return (
-        <div className="fixed top-0 z-50 flex min-h-10 w-full items-center gap-x-0.5 overflow-x-auto bg-[#f1f4f9] px-2.5 py-0.5">
+        <div className="flex min-h-10 items-center gap-x-0.5 overflow-x-auto rounded-sm bg-[#f1f4f9] px-2.5 py-0.5">
             {sections[0].map((item) => (
                 <Button
                     key={item.label}
