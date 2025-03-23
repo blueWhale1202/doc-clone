@@ -92,13 +92,13 @@ export const LineHeight = Extension.create<LineHeightOptions>({
                                 ...node.attrs,
                                 lineHeight: this.options.defaultLineHeight,
                             });
-
-                            if (dispatch) {
-                                dispatch(tr);
-                            }
-                            return true;
                         }
                     });
+
+                    if (dispatch) {
+                        dispatch(tr);
+                    }
+                    return true;
                 },
         };
     },

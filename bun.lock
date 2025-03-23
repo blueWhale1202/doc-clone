@@ -9,6 +9,8 @@
         "@radix-ui/react-popover": "^1.1.6",
         "@radix-ui/react-separator": "^1.1.2",
         "@radix-ui/react-slot": "^1.1.2",
+        "@tiptap-pro/extension-file-handler": "^2.17.5",
+        "@tiptap-pro/extension-unique-id": "^2.17.5",
         "@tiptap/extension-bullet-list": "^2.11.5",
         "@tiptap/extension-color": "^2.11.5",
         "@tiptap/extension-font-family": "^2.11.5",
@@ -257,6 +259,10 @@
     "@tailwindcss/oxide-win32-x64-msvc": ["@tailwindcss/oxide-win32-x64-msvc@4.0.10", "", { "os": "win32", "cpu": "x64" }, "sha512-K/51OZBREcq2J4JE8r9qdX2qjnVfUrm8AT4R+Pd9E27AiIyr7IkLQQjR3mj2Lpb/jUtQ8NS0KkJ1nXMoQpSlkQ=="],
 
     "@tailwindcss/postcss": ["@tailwindcss/postcss@4.0.10", "", { "dependencies": { "@alloc/quick-lru": "^5.2.0", "@tailwindcss/node": "4.0.10", "@tailwindcss/oxide": "4.0.10", "lightningcss": "^1.29.1", "postcss": "^8.4.41", "tailwindcss": "4.0.10" } }, "sha512-3NEomQtd/JrNAaSkuklBLGQkyCpxZjOW8rf64x4lx+Umo7gh0kzwe83QmUF/GrVNgO6TdrCyHf4+41GZGR3EIg=="],
+
+    "@tiptap-pro/extension-file-handler": ["@tiptap-pro/extension-file-handler@2.17.5", "https://registry.tiptap.dev/@tiptap-pro%2fextension-file-handler/-/extension-file-handler-2.17.5.tgz", { "peerDependencies": { "@tiptap/core": "^2.0.0", "@tiptap/pm": "^2.0.0" } }, "sha512-/Hu7WsoHhqZeavg6QjNi4NPmnAtv/KujuSBfPt2ZR9GShJKQNnxJn5GgSidf9Shh3HClrqOZrfYv4h+5UY3LqQ=="],
+
+    "@tiptap-pro/extension-unique-id": ["@tiptap-pro/extension-unique-id@2.17.5", "https://registry.tiptap.dev/@tiptap-pro%2fextension-unique-id/-/extension-unique-id-2.17.5.tgz", { "dependencies": { "uuid": "^10.0.0" }, "peerDependencies": { "@tiptap/core": "^2.0.0", "@tiptap/pm": "^2.0.0" } }, "sha512-eYB2iadHrpTYAMTrtqqYYcHd2IU3XEmomUsBEzM5YLtV0fkqcRhvhKn5nTi1hNBnDd1SETDPv//0GDl9qv6WTg=="],
 
     "@tiptap/core": ["@tiptap/core@2.11.5", "", { "peerDependencies": { "@tiptap/pm": "^2.7.0" } }, "sha512-jb0KTdUJaJY53JaN7ooY3XAxHQNoMYti/H6ANo707PsLXVeEqJ9o8+eBup1JU5CuwzrgnDc2dECt2WIGX9f8Jw=="],
 
@@ -989,6 +995,8 @@
     "use-sidecar": ["use-sidecar@1.1.3", "", { "dependencies": { "detect-node-es": "^1.1.0", "tslib": "^2.0.0" }, "peerDependencies": { "@types/react": "*", "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc" }, "optionalPeers": ["@types/react"] }, "sha512-Fedw0aZvkhynoPYlA5WXrMCAMm+nSWdZt6lzJQ7Ok8S6Q+VsHmHpRWndVRJ8Be0ZbkfPc5LRYH+5XrzXcEeLRQ=="],
 
     "use-sync-external-store": ["use-sync-external-store@1.4.0", "", { "peerDependencies": { "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0" } }, "sha512-9WXSPC5fMv61vaupRkCKCxsPxBocVnwakBEkMIHHpkTTg6icbJtg6jzgtLDm4bl3cSHAca52rYWih0k4K3PfHw=="],
+
+    "uuid": ["uuid@10.0.0", "", { "bin": { "uuid": "dist/bin/uuid" } }, "sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ=="],
 
     "w3c-keyname": ["w3c-keyname@2.2.8", "", {}, "sha512-dpojBhNsCNN7T82Tm7k26A6G9ML3NkhDsnw9n/eoxSRlVBB4CEtIQ/KTCLI2Fwf3ataSXRhYFkQi3SlnFwPvPQ=="],
 

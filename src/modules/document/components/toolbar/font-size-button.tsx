@@ -1,86 +1,71 @@
+import { Button } from "@/components/ui/button";
 import { useEditorStore } from "@/providers/editor-store-provider";
 import { Minus, Plus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+const MAX_FONT_SIZE = 72;
+const MIN_FONT_SIZE = 8;
 
 export const FontSizeButton = () => {
     const { editor } = useEditorStore((state) => state);
 
-    const currentFontSize = editor?.getAttributes("textStyle").fontSize
-        ? editor.getAttributes("textStyle").fontSize.replace("px", "")
-        : "16";
+    const currentFontSize =
+        parseInt(editor?.getAttributes("textStyle").fontSize) || 16;
+
+    useEffect(() => {
+        setFontSize(currentFontSize);
+    }, [currentFontSize]);
 
     const [fontSize, setFontSize] = useState(currentFontSize);
-    const [inputValue, setInputValue] = useState(fontSize);
-    const [isEditing, setIsEditing] = useState(false);
 
-    const updateFontSize = (value: string) => {
-        const size = parseInt(value);
+    const updateFontSize = (value: number) => {
+        const size = Math.min(MAX_FONT_SIZE, Math.max(MIN_FONT_SIZE, value));
 
-        if (!isNaN(size) && size > 0) {
-            editor?.chain().focus().setFontSize(`${size}px`).run();
-            setFontSize(value);
-            setInputValue(value);
-            setIsEditing(false);
-        }
+        editor?.chain().focus().setFontSize(`${size}px`).run();
+        setFontSize(size);
     };
 
     const increment = () => {
-        const size = parseInt(fontSize) + 1;
-        updateFontSize(size.toString());
+        const size = Math.min(MAX_FONT_SIZE, fontSize + 1);
+        updateFontSize(size);
     };
 
     const decrement = () => {
-        const size = parseInt(fontSize) - 1;
-
-        if (size > 0) {
-            updateFontSize(size.toString());
-        }
+        const size = Math.max(MIN_FONT_SIZE, fontSize - 1);
+        updateFontSize(size);
     };
 
     return (
         <div className="flex items-center gap-x-0.5">
-            <button
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm hover:bg-neutral-200/80"
-                onClick={decrement}
+            <Button size="xs" variant="toolbar" onClick={decrement}>
+                <Minus />
+            </Button>
+
+            <form
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    updateFontSize(fontSize);
+                }}
             >
-                <Minus className="size-4" />
-            </button>
-            {isEditing ? (
                 <input
-                    value={inputValue}
+                    className="h-7 w-10 rounded-sm border border-neutral-400 bg-transparent text-center text-sm focus:border-transparent focus:ring-1 focus:ring-blue-400 focus:outline-none"
+                    value={fontSize}
                     onChange={(e) => {
-                        setInputValue(e.target.value);
-                    }}
-                    autoFocus
-                    onBlur={() => {
-                        updateFontSize(inputValue);
-                    }}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                            e.preventDefault();
-                            updateFontSize(inputValue);
-                            editor?.commands.focus();
+                        const parsed = parseInt(e.target.value);
+                        if (isNaN(parsed)) {
+                            return;
                         }
+
+                        setFontSize(parsed);
                     }}
-                    className="h-7 w-10 rounded-sm border border-neutral-400 bg-transparent text-center text-sm focus:ring-0 focus:outline-none"
+                    onBlur={() => updateFontSize(fontSize)}
+                    onFocus={(e) => e.target.select()}
                 />
-            ) : (
-                <button
-                    className="h-7 w-10 cursor-text rounded-sm border border-neutral-400 bg-transparent text-center text-sm"
-                    onClick={() => {
-                        setIsEditing(true);
-                        setFontSize(currentFontSize);
-                    }}
-                >
-                    {currentFontSize}
-                </button>
-            )}
-            <button
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm hover:bg-neutral-200/80"
-                onClick={increment}
-            >
-                <Plus className="size-4" />
-            </button>
+            </form>
+
+            <Button size="xs" variant="toolbar" onClick={increment}>
+                <Plus />
+            </Button>
         </div>
     );
 };

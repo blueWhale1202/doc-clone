@@ -5,7 +5,6 @@ import { useEditorStore } from "@/providers/editor-store-provider";
 import { Color } from "@tiptap/extension-color";
 import FontFamily from "@tiptap/extension-font-family";
 import Highlight from "@tiptap/extension-highlight";
-import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
 import Table from "@tiptap/extension-table";
 import TableCell from "@tiptap/extension-table-cell";
@@ -22,6 +21,8 @@ import ImageResize from "tiptap-extension-resize-image";
 
 import { FontSize } from "./extensions/font-size";
 import { LineHeight } from "./extensions/line-height";
+
+import FileHandler from "@tiptap-pro/extension-file-handler";
 
 export const Editor = () => {
     const { setEditor } = useEditorStore((state) => state);
@@ -63,7 +64,7 @@ export const Editor = () => {
         editorProps: {
             attributes: {
                 style: "padding-left: 56px; padding-right: 56px;",
-                class: "flex min-h-[1054px] w-[816px] cursor-text flex-col border border-[#c7c7c7] bg-white py-10 pr-14 focus:outline-none print:border-0 ",
+                class: "mt-10 flex min-h-[1054px] w-[816px] cursor-text flex-col border border-[#c7c7c7] bg-white py-10 pr-14 focus:outline-none print:border-0",
             },
         },
         extensions: [
@@ -78,7 +79,6 @@ export const Editor = () => {
             TableRow,
             TableHeader,
             TableCell,
-            Image,
             ImageResize,
             Underline,
             TextStyle,
@@ -99,6 +99,59 @@ export const Editor = () => {
             LineHeight.configure({
                 types: ["heading", "paragraph"],
                 defaultLineHeight: "normal",
+            }),
+            FileHandler.configure({
+                allowedMimeTypes: [
+                    "image/png",
+                    "image/jpeg",
+                    "image/gif",
+                    "image/webp",
+                ],
+                onDrop(editor, files, pos) {
+                    files.forEach((file) => {
+                        const reader = new FileReader();
+
+                        reader.readAsDataURL(file);
+                        reader.onload = () => {
+                            editor
+                                .chain()
+                                .insertContentAt(pos, {
+                                    type: "image",
+                                    attrs: {
+                                        src: reader.result,
+                                    },
+                                })
+                                .focus()
+                                .run();
+                        };
+                    });
+                },
+                onPaste(editor, files, pasteContent) {
+                    files.forEach((file) => {
+                        if (pasteContent) {
+                            console.log(
+                                "🚀 ~ onPaste ~ pasteContent:",
+                                pasteContent,
+                            );
+                        }
+
+                        const reader = new FileReader();
+
+                        reader.readAsDataURL(file);
+                        reader.onload = () => {
+                            editor
+                                .chain()
+                                .insertContent({
+                                    type: "image",
+                                    attrs: {
+                                        src: reader.result,
+                                    },
+                                })
+                                .focus()
+                                .run();
+                        };
+                    });
+                },
             }),
         ],
 
