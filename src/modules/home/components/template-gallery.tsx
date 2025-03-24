@@ -7,54 +7,33 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel";
-import { cn } from "@/lib/utils";
-
-type Template = {
-    id: string;
-    label: string;
-    imageUrl: string;
-};
-
-export const TEMPLATES: Template[] = [
-    {
-        id: "blank",
-        label: "Blank document",
-        imageUrl: "galleries/blank-document.png",
-    },
-    {
-        id: "software-proposal",
-        label: "Software development proposal",
-        imageUrl: "galleries/software-proposal.png",
-    },
-    {
-        id: "project-proposal",
-        label: "Project proposal",
-        imageUrl: "galleries/project-proposal.png",
-    },
-    {
-        id: "business-letter",
-        label: "Business letter",
-        imageUrl: "galleries/business-letter.png",
-    },
-    {
-        id: "resume",
-        label: "Resume",
-        imageUrl: "galleries/resume.png",
-    },
-    {
-        id: "cover-letter",
-        label: "Cover letter",
-        imageUrl: "galleries/cover-letter.png",
-    },
-    {
-        id: "report",
-        label: "Report",
-        imageUrl: "galleries/report.png",
-    },
-];
+import { cn, handleError } from "@/lib/utils";
+import { useConvexMutation } from "@convex-dev/react-query";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { api } from "../../../../convex/_generated/api";
+import { TEMPLATES } from "../constants";
 
 export const TemplateGallery = () => {
-    const isCreating = false;
+    const { mutate, isPending: isCreating } = useMutation({
+        mutationFn: useConvexMutation(api.documents.create),
+    });
+
+    const router = useRouter();
+
+    const create = async (title: string, initialContent: string) => {
+        mutate(
+            { title, initialContent },
+            {
+                onSuccess(id) {
+                    router.push(`/documents/${id}`);
+                },
+                onError(error) {
+                    handleError(error);
+                },
+            },
+        );
+    };
 
     return (
         <div className="bg-[#f1f3f4]">
@@ -80,7 +59,9 @@ export const TemplateGallery = () => {
                                         }}
                                         className="flex size-full cursor-pointer flex-col items-center justify-center gap-y-4 rounded-sm border bg-white bg-cover bg-center bg-no-repeat transition hover:border-blue-500 hover:bg-blue-50"
                                         disabled={isCreating}
-                                        onClick={() => {}}
+                                        onClick={() =>
+                                            create(template.label, "")
+                                        }
                                     />
                                     <p className="truncate text-sm font-medium">
                                         {template.label}

@@ -1,3 +1,4 @@
+import { DocumentsTable } from "@/modules/home/components/documents-table";
 import { Navbar } from "@/modules/home/components/navbar";
 import { TemplateGallery } from "@/modules/home/components/template-gallery";
 
@@ -9,6 +10,7 @@ export default async function HomePage() {
             </div>
             <div className="mt-16">
                 <TemplateGallery />
+                <DocumentsTable />
             </div>
         </div>
     );

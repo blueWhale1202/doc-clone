@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
+import { Toaster } from "@/components/ui/sonner";
 import { EditorStoreProvider } from "@/providers/editor-store-provider";
+import { QueryProvider } from "@/providers/query-provider";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 const inter = Inter({
@@ -23,9 +25,12 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={inter.className}>
-                <EditorStoreProvider>
-                    <NuqsAdapter>{children}</NuqsAdapter>
-                </EditorStoreProvider>
+                <NuqsAdapter>
+                    <QueryProvider>
+                        <EditorStoreProvider>{children}</EditorStoreProvider>
+                    </QueryProvider>
+                </NuqsAdapter>
+                <Toaster richColors theme="light" />
             </body>
         </html>
     );
