@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📄 GoogleDocs Clone - Fullstack Real-Time Document Collaboration Platform
 
-## Getting Started
+## 🚀 Overview
 
-First, run the development server:
+GoogleDocs Clone is a fully-featured, real-time collaborative document editing platform, designed to bring the power of modern word processors into a web-based environment. Built with scalability, performance, and extensibility in mind, this project offers everything from advanced rich-text editing to real-time collaboration, notifications, document templates, and beyond.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Whether you're building a collaborative note-taking app, a productivity suite, or an enterprise documentation tool, this clone provides the foundation for your needs.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✨ Key Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 📝 Rich Text Editing
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Advanced Tiptap Editor**: Powered by custom extensions for tables, images, margins, formatting tools, and more.
+- **Copy & Paste Formatting**: Seamlessly retain styles across content.
+- **Undo/Redo History**: Full control of document changes.
+- **Lists and Checklists**: Support for bullets, numbers, and tasks.
+- **Link Embedding**: Add clickable hyperlinks easily.
+- **Image Uploads**: Inline images with support for captions.
+- **Table Support**: Create and format tables inside the editor.
+- **Margin Controls**: Adjust document layout and padding.
 
-## Learn More
+### 🤝 Real-time Collaboration
 
-To learn more about Next.js, take a look at the following resources:
+- **Cursor Tracking**: See collaborators' cursors in real-time.
+- **Presence Awareness**: Know who is viewing or editing.
+- **Live Editing**: All changes sync across all clients instantly.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 💭 Comments & Threads
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Inline Comments**: Select text and start discussions.
+- **Mentions**: Tag collaborators in comment threads.
+- **Thread Resolution**: Mark comments as resolved or reopen discussions.
 
-## Deploy on Vercel
+### 🔔 Notifications
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Real-time Alerts**: Get notified of mentions and edits.
+- **Invite-Based Notifications**: Stay updated on document invites and activity.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 📑 Document Templates
+
+- **Prebuilt Templates**: Start faster with business letters, resumes, proposals, and more.
+- **Customizable**: Add your own templates and content.
+
+### ⬇️ Export Options
+
+- **PDF Export**
+- **HTML Export**
+- **Plain Text Export**
+- **JSON Export**
+
+### 👥 User & Workspace Management
+
+- **User Profiles**: Personalize your identity and avatar.
+- **Organization Workspaces**: Group documents under shared teams.
+- **Invitations**: Email-based invites for document or workspace access.
+- **Authentication**: Secure login and access control.
+
+### 📱 Responsive Design
+
+- **Fully Responsive UI**: Use it comfortably on desktop, tablet, and mobile.
+- **Dark Mode Support**: Theme support for user comfort.
+
+## 🛠️ Tech Stack & Integrations
+
+- **Next.js 15 (App Router)** – Cutting-edge React framework.
+- **Tiptap Editor** – Headless editor with powerful customization.
+- **Tailwind CSS & Shadcn UI** – Modern UI and component library.
+- **Realtime Database** – Seamless collaborative editing.
+- **Authentication** – Secure and scalable auth system.
+
+## 🏁 Why GoogleDocs Clone?
+
+This clone isn't just a demo — it's a foundation for building the next generation of collaborative editing platforms. With robust features, modern design, and a powerful stack, it provides a reliable starting point for developers, startups, and teams seeking to deliver seamless content collaboration.
+
+---
+
+🌟 **Start collaborating smarter — Experience the GoogleDocs Clone now!**
