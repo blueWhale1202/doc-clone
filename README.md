@@ -1,4 +1,4 @@
-# 📄 GoogleDocs Clone - Fullstack Real-Time Document Collaboration Platform
+# 📄 GoogleDocs Clone
 
 ## 🚀 Overview
 
