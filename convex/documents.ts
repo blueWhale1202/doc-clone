@@ -64,7 +64,10 @@ export const create = mutation({
         title: v.optional(v.string()),
         initialContent: v.optional(v.string()),
     },
-    handler: async (ctx, { title, initialContent }) => {
+    handler: async (
+        ctx,
+        { title = "Untitled document", initialContent = "" },
+    ) => {
         const user = await ctx.auth.getUserIdentity();
 
         if (!user) {
@@ -74,7 +77,7 @@ export const create = mutation({
         const organizationId = user.org_id as OrganizationId;
 
         return await ctx.db.insert("documents", {
-            title: title || "Untitled document",
+            title,
             initialContent,
             ownerId: user.subject,
             organizationId: organizationId ?? undefined,
@@ -127,5 +130,35 @@ export const update = mutation({
         }
 
         await ctx.db.patch(id, { title });
+    },
+});
+
+export const get = query({
+    args: { id: v.id("documents") },
+    handler: async (ctx, { id }) => {
+        const document = await ctx.db.get(id);
+
+        if (!document) {
+            throw new ConvexError("Document not found");
+        }
+
+        return document;
+    },
+});
+
+export const getByIds = query({
+    args: { ids: v.array(v.id("documents")) },
+    handler: async (ctx, { ids }) => {
+        const documents = [];
+
+        for (const id of ids) {
+            const document = await ctx.db.get(id);
+            if (document) {
+                documents.push({ id: document._id, name: document.title });
+            } else {
+                documents.push({ id, name: "[Removed]" });
+            }
+        }
+        return documents;
     },
 });

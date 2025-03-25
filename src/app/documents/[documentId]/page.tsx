@@ -1,22 +1,31 @@
-import { Editor } from "@/modules/document/components/editor";
-import { Navbar } from "@/modules/document/components/navbar";
-import { Toolbar } from "@/modules/document/components/toolbar";
+import { Document } from "@/modules/document/components/document";
+import { getAuthToken } from "@/modules/document/hooks/get-auth-token";
+import { preloadQuery } from "convex/nextjs";
+import { api } from "../../../../convex/_generated/api";
+import { Id } from "../../../../convex/_generated/dataModel";
 
 type Props = {
-    params: Promise<{ documentId: string }>;
+    params: Promise<{ documentId: Id<"documents"> }>;
 };
 
-export default async function DocumentIdPage({ params }: Props) {
-    // const { documentId } = await params;
-    return (
-        <div className="min-h-screen bg-[#fafbfd]">
-            <div className="fixed inset-x-0 top-0 z-50 flex flex-col gap-y-2 bg-[#fafbfd] px-4 pt-2 print:hidden">
-                <Navbar />
-                <Toolbar />
-            </div>
-            <div className="pt-[114px] print:pt-0">
-                <Editor />
-            </div>
-        </div>
+export default async function DocumentPage({ params }: Props) {
+    const { documentId } = await params;
+
+    const token = await getAuthToken();
+
+    if (!token) {
+        throw new Error("Unauthorized");
+    }
+
+    const preloadedDocument = await preloadQuery(
+        api.documents.get,
+        { id: documentId },
+        { token },
     );
+
+    if (!preloadedDocument) {
+        throw new Error("Document not found");
+    }
+
+    return <Document preloadedDocument={preloadedDocument} />;
 }

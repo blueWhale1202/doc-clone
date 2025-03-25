@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
 import { useSections } from "../../hooks/use-section";
 import { AlignButton } from "./align-button";
 import { FontFamilyButton } from "./font-family-button";
@@ -18,7 +19,7 @@ export const Toolbar = () => {
     const sections = useSections();
 
     return (
-        <div className="flex min-h-10 items-center gap-x-0.5 overflow-x-auto rounded-sm bg-[#f1f4f9] px-2.5 py-0.5">
+        <div className="flex min-h-10 items-center gap-x-0.5 gap-y-1 overflow-x-auto rounded-sm bg-[#f1f4f9] px-2.5 py-0.5">
             {sections[0].map((item) => (
                 <Button
                     key={item.label}
@@ -66,6 +67,7 @@ export const Toolbar = () => {
                     onClick={item.onClick}
                     variant="toolbar"
                     size="xs"
+                    className={cn(item.isActive && "bg-neutral-200/80")}
                 >
                     <item.icon />
                 </Button>

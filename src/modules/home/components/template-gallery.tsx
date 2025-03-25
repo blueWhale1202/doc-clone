@@ -60,7 +60,10 @@ export const TemplateGallery = () => {
                                         className="flex size-full cursor-pointer flex-col items-center justify-center gap-y-4 rounded-sm border bg-white bg-cover bg-center bg-no-repeat transition hover:border-blue-500 hover:bg-blue-50"
                                         disabled={isCreating}
                                         onClick={() =>
-                                            create(template.label, "")
+                                            create(
+                                                template.label,
+                                                template.initialContent,
+                                            )
                                         }
                                     />
                                     <p className="truncate text-sm font-medium">

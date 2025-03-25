@@ -9,16 +9,18 @@ import {
     useSensor,
     useSensors,
 } from "@dnd-kit/core";
+import { restrictToHorizontalAxis } from "@dnd-kit/modifiers";
 import { useId, useState } from "react";
+import { MAX_WIDTH } from "../constants";
+import { useRuler } from "../hooks/use-ruler";
 import { Marker } from "./marker";
 
 const MARKERS = Array.from({ length: 83 }, (_, i) => i);
-const MAX_WIDTH = 816;
-const EDGE_OFFSET = 50;
 
 export const Ruler = () => {
-    const [leftPos, setLeftPos] = useState(EDGE_OFFSET);
-    const [rightPos, setRightPos] = useState(MAX_WIDTH - EDGE_OFFSET);
+    const [leftPadding, setLeftPadding] = useRuler("leftPadding");
+    const [rightPadding, setRightPadding] = useRuler("rightPadding");
+
     const [activeId, setActiveId] = useState<string | null>(null);
 
     const leftMarkerId = useId();
@@ -51,15 +53,15 @@ export const Ruler = () => {
         if (id === leftMarkerId) {
             const newPosition = Math.max(
                 0,
-                Math.min(rightPos - 10, leftPos + delta.x),
+                Math.min(MAX_WIDTH - rightPadding - 10, leftPadding + delta.x),
             );
-            setLeftPos(newPosition);
+            setLeftPadding(newPosition);
         } else if (id === rightMarkerId) {
-            const newPosition = Math.min(
-                MAX_WIDTH,
-                Math.max(leftPos + 10, rightPos + delta.x),
+            const newPosition = Math.max(
+                10,
+                Math.min(MAX_WIDTH - leftPadding - 10, rightPadding - delta.x),
             );
-            setRightPos(newPosition);
+            setRightPadding(newPosition);
         }
     };
 
@@ -68,12 +70,13 @@ export const Ruler = () => {
             sensors={sensors}
             onDragStart={onDragStart}
             onDragEnd={onDragEnd}
+            modifiers={[restrictToHorizontalAxis]}
         >
             <div className="relative flex h-6 items-end border-b border-gray-300 select-none print:hidden">
                 <div className="relative mx-auto size-full max-w-[816px]">
                     <Marker
                         side="left"
-                        position={leftPos}
+                        position={leftPadding}
                         id={leftMarkerId}
                         isDragging={activeId === leftMarkerId}
                     />
@@ -112,7 +115,7 @@ export const Ruler = () => {
 
                     <Marker
                         side="right"
-                        position={rightPos}
+                        position={rightPadding}
                         id={rightMarkerId}
                         isDragging={activeId === rightMarkerId}
                     />

@@ -25,11 +25,31 @@ import { LineHeight } from "./extensions/line-height";
 import FileHandler from "@tiptap-pro/extension-file-handler";
 import { Ruler } from "./ruler";
 
-export const Editor = () => {
+import { Threads } from "@/modules/room/components/threads";
+import {
+    FloatingToolbar,
+    useLiveblocksExtension,
+} from "@liveblocks/react-tiptap";
+import { useRuler } from "../hooks/use-ruler";
+
+type Props = {
+    initialContent?: string;
+};
+
+export const Editor = ({ initialContent }: Props) => {
     const { setEditor } = useEditorStore((state) => state);
+
+    const liveblocks = useLiveblocksExtension({
+        initialContent,
+        offlineSupport_experimental: true,
+    });
+
+    const [leftPadding] = useRuler("leftPadding");
+    const [rightPadding] = useRuler("rightPadding");
 
     const editor = useEditor({
         immediatelyRender: false,
+        autofocus: true,
 
         onCreate({ editor }) {
             setEditor(editor);
@@ -65,12 +85,16 @@ export const Editor = () => {
 
         editorProps: {
             attributes: {
-                style: "padding-left: 56px; padding-right: 56px;",
+                style: `padding-left: ${leftPadding}px; padding-right: ${rightPadding}px;`,
                 class: "flex min-h-[1054px] w-[816px] cursor-text flex-col border border-[#c7c7c7] bg-white py-10 pr-14 focus:outline-none print:border-0",
             },
         },
         extensions: [
-            StarterKit,
+            liveblocks,
+
+            StarterKit.configure({
+                history: false,
+            }),
             TaskList,
             TaskItem.configure({
                 nested: true,
@@ -156,23 +180,6 @@ export const Editor = () => {
                 },
             }),
         ],
-
-        content: `
-        <table>
-          <tbody>
-            <tr>
-              <th>Name</th>
-              <th colspan="3">Description</th>
-            </tr>
-            <tr>
-              <td>Cyndi Lauper</td>
-              <td>Singer</td>
-              <td>Songwriter</td>
-              <td>Actress</td>
-            </tr>
-          </tbody>
-        </table>
-        `,
     });
 
     return (
@@ -180,6 +187,8 @@ export const Editor = () => {
             <Ruler />
             <div className="mx-auto flex w-[816px] min-w-max justify-center py-4 print:w-full print:min-w-0 print:py-0">
                 <EditorContent editor={editor} />
+                <Threads editor={editor} />
+                <FloatingToolbar editor={editor} />
             </div>
         </div>
     );
